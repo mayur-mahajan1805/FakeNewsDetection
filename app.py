@@ -127,9 +127,22 @@ def draw_entity_chart(entities):
     )
     return fig
 
-# --- Load API Keys (Hidden, from environment) ---
+# --- Load API Keys (Support for both .env and Streamlit Cloud Secrets) ---
 gemini_key = os.getenv("GEMINI_API_KEY")
 news_key = os.getenv("NEWS_API_KEY")
+
+# Fallback to Streamlit Secrets (for Cloud Deployment)
+if not gemini_key:
+    try:
+        gemini_key = st.secrets["GEMINI_API_KEY"]
+    except:
+        pass
+
+if not news_key:
+    try:
+        news_key = st.secrets["NEWS_API_KEY"]
+    except:
+        pass
 
 # --- Top Navigation Bar ---
 # --- Load and Encode Logo ---

@@ -11,3 +11,4 @@ lxml
 textblob
 scikit-learn
 joblib
+fpdf

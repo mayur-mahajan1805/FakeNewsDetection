@@ -1,0 +1,52 @@
+<!-- TruthLens AI - Futuristic Circuit Logo V2 -->
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="circuitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="50%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#ec4899"/>
+    </linearGradient>
+    
+    <radialGradient id="coreGlow">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Outer Circuit Ring -->
+  <circle cx="100" cy="100" r="80" fill="none" stroke="url(#circuitGrad)" stroke-width="3" stroke-dasharray="5,5"/>
+  
+  <!-- Circuit Nodes (Corner Points) -->
+  <rect x="95" y="15" width="10" height="10" fill="#06b6d4" rx="2"/>
+  <rect x="175" y="95" width="10" height="10" fill="#8b5cf6" rx="2"/>
+  <rect x="95" y="175" width="10" height="10" fill="#ec4899" rx="2"/>
+  <rect x="15" y="95" width="10" height="10" fill="#06b6d4" rx="2"/>
+  
+  <!-- Central Processing Unit -->
+  <rect x="70" y="70" width="60" height="60" fill="rgba(139, 92, 246, 0.1)" stroke="url(#circuitGrad)" stroke-width="4" rx="8"/>
+  
+  <!-- Inner Core (AI Brain) -->
+  <circle cx="100" cy="100" r="20" fill="url(#coreGlow)"/>
+  <circle cx="100" cy="100" r="15" fill="none" stroke="#06b6d4" stroke-width="2"/>
+  <circle cx="100" cy="100" r="8" fill="#8b5cf6"/>
+  
+  <!-- Circuit Paths -->
+  <path d="M 100 20 L 100 70" stroke="#06b6d4" stroke-width="2" fill="none"/>
+  <path d="M 180 100 L 130 100" stroke="#8b5cf6" stroke-width="2" fill="none"/>
+  <path d="M 100 180 L 100 130" stroke="#ec4899" stroke-width="2" fill="none"/>
+  <path d="M 20 100 L 70 100" stroke="#06b6d4" stroke-width="2" fill="none"/>
+  
+  <!-- Data Flow Indicators -->
+  <circle cx="100" cy="45" r="3" fill="#06b6d4">
+    <animate attributeName="cy" values="45;70;45" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="155" cy="100" r="3" fill="#8b5cf6">
+    <animate attributeName="cx" values="155;130;155" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Corner Connectors -->
+  <line x1="100" y1="70" x2="70" y2="70" stroke="url(#circuitGrad)" stroke-width="1.5" opacity="0.6"/>
+  <line x1="130" y1="70" x2="130" y2="100" stroke="url(#circuitGrad)" stroke-width="1.5" opacity="0.6"/>
+  <line x1="130" y1="130" x2="100" y2="130" stroke="url(#circuitGrad)" stroke-width="1.5" opacity="0.6"/>
+  <line x1="70" y1="130" x2="70" y2="100" stroke="url(#circuitGrad)" stroke-width="1.5" opacity="0.6"/>
+</svg>

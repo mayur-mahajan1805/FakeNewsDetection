@@ -167,6 +167,7 @@ st.markdown(f"""
             <h1 style="
                 margin: 0;
                 padding: 0;
+                height: 60px;
                 font-size: 2.2rem; 
                 font-family: 'Poppins', sans-serif; 
                 font-weight: 800; 
@@ -175,7 +176,6 @@ st.markdown(f"""
                 -webkit-text-fill-color: transparent;
                 letter-spacing: -0.02em;
                 text-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
-                line-height: 60px;
                 display: flex;
                 align-items: center;
             ">TruthLens AI</h1>

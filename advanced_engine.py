@@ -104,11 +104,31 @@ class AdvancedTruthLens:
         }}
         """
         
+        
         try:
             response = self.model.generate_content(prompt)
+            
+            # Check if response was blocked by safety filters
+            if not response.parts:
+                return {
+                    "error": "Content Blocked", 
+                    "message": "⚠️ Gemini's safety filters flagged this content as potentially harmful or violating content policies. This often happens with extreme conspiracy theories or medical misinformation. Try analyzing a different article or use more neutral language."
+                }
+            
             # Cleanup json (sometimes model returns ```json ... ```)
             raw_text = response.text.replace("```json", "").replace("```", "").strip()
             return json.loads(raw_text)
+        except AttributeError as e:
+            # Happens when response.text fails due to safety block
+            return {
+                "error": "Safety Block", 
+                "message": "🛡️ This content was blocked by Gemini's safety filters. The text may contain extreme misinformation, hate speech, or policy violations. Please try a different article."
+            }
+        except json.JSONDecodeError as e:
+            return {
+                "error": "Invalid Response", 
+                "message": f"⚠️ Gemini returned invalid data. This sometimes happens with very short or unusual text. Error: {str(e)}"
+            }
         except Exception as e:
             return {"error": "Analysis Failed", "message": str(e)}
 

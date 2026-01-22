@@ -153,7 +153,7 @@ if not news_key:
 # --- Top Navigation Bar ---
 # --- Load and Encode Logo ---
 def get_logo_base64():
-    with open("logo_final.svg", "rb") as image_file:
+    with open("logo_premium.png", "rb") as image_file:
         return base64.b64encode(image_file.read()).decode()
 
 logo_base64 = get_logo_base64()
@@ -163,7 +163,7 @@ st.markdown(f"""
 <div style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 1rem 2rem; border-radius: 15px; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(2, 6, 23, 0.5); border: 1px solid rgba(59, 130, 246, 0.2);">
     <div style="display: flex; align-items: center; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 1.5rem;">
-            <img src="data:image/svg+xml;base64,{logo_base64}" alt="TruthLens Logo" width="60" height="60" style="filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.3));">
+            <img src="data:image/png;base64,{logo_base64}" alt="TruthLens Logo" width="70" height="70" style="filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4)); border-radius: 10px;">
             <h1 style="
                 margin: 0; 
                 font-size: 2.2rem; 

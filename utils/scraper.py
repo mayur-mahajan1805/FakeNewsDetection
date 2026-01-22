@@ -44,17 +44,43 @@ class NewsScraper:
             else:
                 title = soup.title.get_text(strip=True) if soup.title else "Unknown Title"
 
-            # Attempt to find the main article content
-            # Heuristic: looking for typical article body tags
+            # ENHANCED: Multiple strategies to find article content
             article_text = ""
-            paragraphs = soup.find_all('p')
             
-            # Simple heuristic: Filter out very short paragraphs (nav links, disclaimers)
-            valid_paragraphs = [p.get_text(strip=True) for p in paragraphs if len(p.get_text(strip=True)) > 50]
-            article_text = " ".join(valid_paragraphs)
+            # Strategy 1: Look for common article containers
+            article_containers = soup.find_all(['article', 'main', 'div'], class_=re.compile(r'(article|story|content|post|body)', re.I))
+            if article_containers:
+                for container in article_containers:
+                    paragraphs = container.find_all('p')
+                    valid_paragraphs = [p.get_text(strip=True) for p in paragraphs if len(p.get_text(strip=True)) > 30]
+                    if valid_paragraphs:
+                        article_text = " ".join(valid_paragraphs)
+                        break
+            
+            # Strategy 2: Fallback to all paragraphs (reduced filter to 30 chars)
+            if not article_text:
+                paragraphs = soup.find_all('p')
+                valid_paragraphs = [p.get_text(strip=True) for p in paragraphs if len(p.get_text(strip=True)) > 30]
+                article_text = " ".join(valid_paragraphs)
+            
+            # Strategy 3: Last resort - get ALL text from body
+            if len(article_text) < 100:
+                body = soup.find('body')
+                if body:
+                    # Remove script and style elements
+                    for script in body(["script", "style", "nav", "header", "footer"]):
+                        script.decompose()
+                    article_text = body.get_text(separator=' ', strip=True)
             
             # Cleanup
             article_text = re.sub(r'\s+', ' ', article_text).strip()
+            
+            # Final validation
+            if len(article_text) < 100:
+                return {
+                    "success": False,
+                    "error": "⚠️ Could not extract enough text. This site may use JavaScript to load content. Please COPY & PASTE the article text instead."
+                }
             
             return {
                 "success": True,

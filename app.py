@@ -33,6 +33,12 @@ def go_to_analysis(url):
 if 'active_tab' not in st.session_state:
     st.session_state.active_tab = "Home"
 
+# Rate Limiting: Track analysis count per session
+if 'analysis_count' not in st.session_state:
+    st.session_state.analysis_count = 0
+
+FREE_ANALYSIS_LIMIT = 3
+
 # --- Helpers for Visuals ---
 
 def draw_gauge_chart(score):
@@ -314,6 +320,22 @@ elif st.session_state.active_tab == "Analyzer":
     
     st.markdown("### 🔍 Article Inspector")
     
+    # Rate Limit Display
+    remaining = FREE_ANALYSIS_LIMIT - st.session_state.analysis_count
+    if remaining > 0:
+        st.info(f"💎 Free analyses remaining: **{remaining}/{FREE_ANALYSIS_LIMIT}** (Resets when you refresh the page)")
+    else:
+        st.error("🚫 **Daily limit reached!** You've used all 3 free analyses. Refresh the page to continue or contact the developer for unlimited access.")
+        st.markdown("---")
+        st.markdown("""
+        ### Want Unlimited Access?
+        This is a demo project. For production use:
+        - 🔐 Contact for user authentication
+        - ⚡ API key pooling for high traffic
+        - 📊 Premium features (bulk analysis, API access)
+        """)
+        st.stop()
+    
     input_method = st.tabs(["📝 Paste Text", "🔗 Analyze URL"])
     
     article_content = ""
@@ -355,6 +377,14 @@ elif st.session_state.active_tab == "Analyzer":
                         st.error(result['error'])
 
     if article_content and len(article_content) > 50:
+        
+        # Check rate limit before processing
+        if st.session_state.analysis_count >= FREE_ANALYSIS_LIMIT:
+            st.error("⏳ You've reached your free analysis limit. Refresh the page to reset.")
+            st.stop()
+        
+        # Increment counter
+        st.session_state.analysis_count += 1
         
         # Animated Loading
         progress_text = "Analysis in progress. Please wait."
